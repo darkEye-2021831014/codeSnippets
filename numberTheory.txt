@@ -1,12 +1,13 @@
-const int M = 1e6 + 1;
-vector<bool> isPrime(M, true);
-vector<int> lp(M, 0);
-vector<int> factors[M];
+const int N = 1e6 + 10;
+const int M = 1e9 + 7;
 
+
+vector<bool> isPrime(N, true);
+vector<int> lp(N, 0);
 void seive()
 {
     isPrime[0] = isPrime[1] = false;
-    for (int i = 2; i < M; i++)
+    for (int i = 2; i < N; i++)
     {
         if (isPrime[i] == true)
         {
@@ -21,9 +22,10 @@ void seive()
     }
 }
 
+vector<int> factors[N];
 void factorization()
 {
-    for (int i = 2; i < M; i++)
+    for (int i = 2; i < N; i++)
     {
         int num = i;
         while (num > 1)
@@ -36,4 +38,42 @@ void factorization()
             }
         }
     }
+}
+
+vector<int> divisors[N];
+void allDivisors()
+{
+    for (int i = 1; i < N; i++)
+    {
+        for (int j = i; j < N; j += i)
+        {
+            divisors[j].push_back(i);
+        }
+    }
+}
+
+int binMultiply(int a, int b)
+{
+    int ans = 0;
+    while (b > 0)
+    {
+        if (b & 1)
+            ans = (ans + a) % M;
+        a = (a + a) % M;
+        b >>= 1;
+    }
+    return ans;
+}
+
+int binaryExponentiation(int a, int b)
+{
+    int ans = 1;
+    while (b > 0)
+    {
+        if (b & 1)
+            ans = binMultiply(ans, a);
+        a = binMultiply(a, a);
+        b >>= 1;
+    }
+    return ans;
 }
