@@ -1,0 +1,39 @@
+const int M = 1e6 + 1;
+vector<bool> isPrime(M, true);
+vector<int> lp(M, 0);
+vector<int> factors[M];
+
+void seive()
+{
+    isPrime[0] = isPrime[1] = false;
+    for (int i = 2; i < M; i++)
+    {
+        if (isPrime[i] == true)
+        {
+            lp[i] = i;
+            for (int j = i * 2; j < M; j += i)
+            {
+                isPrime[j] = false;
+                if (lp[j] == 0)
+                    lp[j] = i;
+            }
+        }
+    }
+}
+
+void factorization()
+{
+    for (int i = 2; i < M; i++)
+    {
+        int num = i;
+        while (num > 1)
+        {
+            int prime_factor = lp[num];
+            while (num % prime_factor == 0)
+            {
+                num /= prime_factor;
+                factors[i].push_back(prime_factor);
+            }
+        }
+    }
+}
