@@ -19,7 +19,7 @@ void build(int node, int begin, int end, vi &array)
 int query(int node, int begin, int end, int leftIndex, int rightIndex)
 {
     if (end < leftIndex || begin > rightIndex)
-        return 0; // node is outside of the seach range
+        return 0; //node is outside of the seach range so return the appropriate value like for summation return 0 but for multiplication return 1(the identity)
     if (begin >= leftIndex && end <= rightIndex)
         return nodeValue[node]; // node is inside the search range
     // now a part of the node is inside the seach range
