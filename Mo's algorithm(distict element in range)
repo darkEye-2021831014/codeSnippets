@@ -1,0 +1,52 @@
+struct Q
+{
+    int l, r, ind;
+};
+
+int rootN;
+
+bool compare(Q first, Q second)
+{
+    if ((first.l / rootN) == (second.l / rootN))
+        return first.r < second.r;
+    return (first.l / rootN) < (second.l / rootN);
+}
+
+//inside code
+vi freq(1e6 + 10, 0);
+    vector<int> ans(q);
+    int curl = 0, curr = -1, l = -1, r = -1, cans = 0;
+    for (int i = 0; i < q; i++)
+    {
+        l = queries[i].l,
+        r = queries[i].r;
+        while (curr < r)
+        {
+            curr++;
+            freq[a[curr]]++;
+            if (freq[a[curr]] == 1)
+                cans++;
+        }
+        while (curl > l)
+        {
+            curl--;
+            freq[a[curl]]++;
+            if (freq[a[curl]] == 1)
+                cans++;
+        }
+        while (curl < l)
+        {
+            freq[a[curl]]--;
+            if (freq[a[curl]] == 0)
+                cans--;
+            curl++;
+        }
+        while (curr > r)
+        {
+            freq[a[curr]]--;
+            if (freq[a[curr]] == 0)
+                cans--;
+            curr--;
+        }
+        ans[queries[i].ind] = cans;
+    }
