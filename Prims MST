@@ -1,0 +1,40 @@
+const int N = 1e5 + 10;
+int cost[N];
+int visited[N];
+int prims(vector<vp> &graph, int node, int n)
+{
+    int cst = 0;
+    set<pair<int, int>> st;
+    st.insert({0, node});
+    cost[node] = 0;
+    stt MST;
+    while (st.size())
+    {
+        int cur_n = st.begin()->second;
+        int cur_c = st.begin()->first;
+
+        st.erase(st.begin());
+        visited[cur_n] = 1;
+        cst += cur_c;
+        MST.insert(cur_n);
+        for (auto &child : graph[cur_n])
+        {
+            if (visited[child.first])
+                continue;
+            if (child.second < cost[child.first])
+            {
+                st.erase({cost[child.first], child.first});
+                cost[child.first] = child.second;
+                st.insert({cost[child.first], child.first});
+            }
+        }
+    }
+
+    for (int i = 1; i <= n; i++)
+    {
+        if (!MST.count(i))
+            return INF; //can't create minimum spanning tree
+    }
+
+    return cst;
+}
