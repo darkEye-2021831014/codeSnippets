@@ -1,0 +1,49 @@
+const int ALPHABET_SIZE = 26;
+struct trieNode
+{
+    trieNode *child[ALPHABET_SIZE];
+    bool isEnd = false;
+};
+
+trieNode *getNode()
+{
+    trieNode *node = new trieNode;
+    node->isEnd = false;
+    for (int i = 0; i < ALPHABET_SIZE; i++)
+    {
+        node->child[i] = NULL;
+    }
+    return node;
+}
+
+void insert(trieNode *root, string key)
+{
+    trieNode *node = root;
+    for (int i = 0; i < key.size(); i++)
+    {
+        int ind = key[i] - 'a';
+        if (!node->child[ind])
+            node->child[ind] = getNode();
+
+        node = node->child[ind];
+    }
+    node->isEnd = true;
+}
+
+int search(trieNode *root, string key)
+{
+    trieNode *node = root;
+    for (int i = 0; i < key.size(); i++)
+    {
+        int ind = key[i] - 'a';
+        if (!node->child[ind])
+            return 0; // not found
+        node = node->child[ind];
+    }
+    if (node->isEnd)
+        return 1; // found
+    return 0;
+}
+
+// inside code
+trieNode *root = getNode();
