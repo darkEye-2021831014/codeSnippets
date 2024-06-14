@@ -1,29 +1,38 @@
-//DSU- find Connected Components
-const int N = 5 * 1e5 + 10;
-int Size[N];
-int parent[N];
-void makeNode(int v)
+// DSU- find Connected Components
+class DSU
 {
-    parent[v] = v;
-    Size[v] = 1;
-}
-
-int findRoot(int v)
-{
-    if (parent[v] == v)
-        return v;
-    return parent[v] = findRoot(parent[v]);
-}
-
-void Union(int a, int b)
-{
-    a = findRoot(a);
-    b = findRoot(b);
-    if (a != b)
+public:
+    vector<int> Size;
+    vector<int> parent;
+    DSU(int n)
     {
-        if (Size[a] < Size[b])
-            swap(a, b);
-        parent[b] = a;
-        Size[a] += Size[b];
+        Size.resize(n);
+        parent.resize(n);
     }
-}
+
+    void makeNode(int v)
+    {
+        parent[v] = v;
+        Size[v] = 1;
+    }
+
+    int findRoot(int v)
+    {
+        if (parent[v] == v)
+            return v;
+        return parent[v] = findRoot(parent[v]);
+    }
+
+    void Union(int a, int b)
+    {
+        a = findRoot(a);
+        b = findRoot(b);
+        if (a != b)
+        {
+            if (Size[a] < Size[b])
+                swap(a, b);
+            parent[b] = a;
+            Size[a] += Size[b];
+        }
+    }
+};
