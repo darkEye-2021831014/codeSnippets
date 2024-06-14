@@ -1,0 +1,21 @@
+template <typename T>
+class monotonicQueue
+{
+public:
+    deque<T> dq;
+    int maxLength = 0;
+    void increasingQueue(vi &a, int l, int r)
+    {
+        int n = a.size();
+        for (int i = l; i <= r; i++)
+        {
+            while (!dq.empty() && dq.back() > a[i])
+            {
+                dq.pop_back();
+            }
+            dq.push_back(a[i]);
+
+            maxLength = max((int)dq.size(), maxLength);
+        }
+    }
+};
