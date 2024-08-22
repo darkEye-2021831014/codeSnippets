@@ -1,56 +1,69 @@
-int operation(int a, int b)
+class SEG
 {
-    return a + b;
-}
+    int N;
+    vector<int> nodeValue;
 
-const int N = 1e6 + 10;
-int nodeValue[5 * N]; // 4*N Is Also Valid
-void build(int node, int begin, int end, vi &array)
-{
-    if (begin == end)
+public:
+    SEG(int n, vector<int> &array)
     {
-        nodeValue[node] = array[begin];
-        return;
+        N = n + 10;
+        nodeValue.resize(4 * N);
+        build(1, 0, n - 1, array);
     }
-    int mid = (begin + end) / 2;
-    int leftNode = node * 2, rightNode = node * 2 + 1;
-    build(leftNode, begin, mid, array);
-    build(rightNode, mid + 1, end, array);
-    // Do the operation for which You Need precomputaion
-    // The following example is for summation operation
-    nodeValue[node] = operation(nodeValue[leftNode], nodeValue[rightNode]);
-}
 
-int query(int node, int begin, int end, int leftIndex, int rightIndex)
-{
-    if (end < leftIndex || begin > rightIndex)
-        return 0; // node is outside of the seach range so return the appropriate value like for summation return 0 but for multiplication return 1(the identity)
-    if (begin >= leftIndex && end <= rightIndex)
-        return nodeValue[node]; // node is inside the search range
-    // now a part of the node is inside the seach range
-    int mid = (begin + end) / 2;
-    int leftNode = node * 2, rightNode = node * 2 + 1;
-    // Do the operation for which you need precomputation here
-    // The Following Example Is For Summation Operation
-    return operation(query(leftNode, begin, mid, leftIndex, rightIndex),
-                     query(rightNode, mid + 1, end, leftIndex, rightIndex));
-}
-
-void update(int node, int begin, int end, int updateIndex, int newValue)
-{
-    if (end < updateIndex || begin > updateIndex)
-        return; // node is outside of the seach range
-    if (begin == updateIndex && end == updateIndex)
+    // operation
+    int operation(int a, int b)
     {
-        nodeValue[node] = newValue; // node is inside the search range
-        return;
+        return a + b;
     }
-    // now a part of the node is inside the seach range
-    int mid = (begin + end) / 2;
-    int leftNode = node * 2, rightNode = node * 2 + 1;
-    update(leftNode, begin, mid, updateIndex, newValue);
-    update(rightNode, mid + 1, end, updateIndex, newValue);
-    // do the operation for which you need precomputation
-    // the example below is for summation operation
-    nodeValue[node] = operation(nodeValue[leftNode], nodeValue[rightNode]);
-}
+
+    void build(int node, int begin, int end, vi &array)
+    {
+        if (begin == end)
+        {
+            nodeValue[node] = array[begin];
+            return;
+        }
+        int mid = (begin + end) / 2;
+        int leftNode = node * 2, rightNode = node * 2 + 1;
+        build(leftNode, begin, mid, array);
+        build(rightNode, mid + 1, end, array);
+        // Do the operation for which You Need precomputaion
+        // The following example is for summation operation
+        nodeValue[node] = operation(nodeValue[leftNode], nodeValue[rightNode]);
+    }
+
+    int query(int node, int begin, int end, int leftIndex, int rightIndex)
+    {
+        if (end < leftIndex || begin > rightIndex)
+            return 0; // node is outside of the seach range so return the appropriate value like for summation return 0 but for multiplication return 1(the identity)
+        if (begin >= leftIndex && end <= rightIndex)
+            return nodeValue[node]; // node is inside the search range
+        // now a part of the node is inside the seach range
+        int mid = (begin + end) / 2;
+        int leftNode = node * 2, rightNode = node * 2 + 1;
+        // Do the operation for which you need precomputation here
+        // The Following Example Is For Summation Operation
+        return operation(query(leftNode, begin, mid, leftIndex, rightIndex),
+                         query(rightNode, mid + 1, end, leftIndex, rightIndex));
+    }
+
+    void update(int node, int begin, int end, int updateIndex, int newValue)
+    {
+        if (end < updateIndex || begin > updateIndex)
+            return; // node is outside of the seach range
+        if (begin == updateIndex && end == updateIndex)
+        {
+            nodeValue[node] = newValue; // node is inside the search range
+            return;
+        }
+        // now a part of the node is inside the seach range
+        int mid = (begin + end) / 2;
+        int leftNode = node * 2, rightNode = node * 2 + 1;
+        update(leftNode, begin, mid, updateIndex, newValue);
+        update(rightNode, mid + 1, end, updateIndex, newValue);
+        // do the operation for which you need precomputation
+        // the example below is for summation operation
+        nodeValue[node] = operation(nodeValue[leftNode], nodeValue[rightNode]);
+    }
+};
