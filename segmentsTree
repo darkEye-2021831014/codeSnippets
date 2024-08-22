@@ -1,3 +1,8 @@
+int operation(int a, int b)
+{
+    return a + b;
+}
+
 const int N = 1e6 + 10;
 int nodeValue[5 * N]; // 4*N Is Also Valid
 void build(int node, int begin, int end, vi &array)
@@ -13,13 +18,13 @@ void build(int node, int begin, int end, vi &array)
     build(rightNode, mid + 1, end, array);
     // Do the operation for which You Need precomputaion
     // The following example is for summation operation
-    nodeValue[node] = nodeValue[leftNode] + nodeValue[rightNode];
+    nodeValue[node] = operation(nodeValue[leftNode], nodeValue[rightNode]);
 }
 
 int query(int node, int begin, int end, int leftIndex, int rightIndex)
 {
     if (end < leftIndex || begin > rightIndex)
-        return 0; //node is outside of the seach range so return the appropriate value like for summation return 0 but for multiplication return 1(the identity)
+        return 0; // node is outside of the seach range so return the appropriate value like for summation return 0 but for multiplication return 1(the identity)
     if (begin >= leftIndex && end <= rightIndex)
         return nodeValue[node]; // node is inside the search range
     // now a part of the node is inside the seach range
@@ -27,8 +32,8 @@ int query(int node, int begin, int end, int leftIndex, int rightIndex)
     int leftNode = node * 2, rightNode = node * 2 + 1;
     // Do the operation for which you need precomputation here
     // The Following Example Is For Summation Operation
-    return query(leftNode, begin, mid, leftIndex, rightIndex) +
-           query(rightNode, mid + 1, end, leftIndex, rightIndex);
+    return operation(query(leftNode, begin, mid, leftIndex, rightIndex),
+                     query(rightNode, mid + 1, end, leftIndex, rightIndex));
 }
 
 void update(int node, int begin, int end, int updateIndex, int newValue)
@@ -47,5 +52,5 @@ void update(int node, int begin, int end, int updateIndex, int newValue)
     update(rightNode, mid + 1, end, updateIndex, newValue);
     // do the operation for which you need precomputation
     // the example below is for summation operation
-    nodeValue[node] = nodeValue[leftNode] + nodeValue[rightNode];
+    nodeValue[node] = operation(nodeValue[leftNode], nodeValue[rightNode]);
 }
