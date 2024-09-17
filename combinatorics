@@ -1,0 +1,24 @@
+int pw(int a, int b, int m)
+{
+    if (b == 0)
+        return 1;
+
+    int ans = 1;
+    if (b & 1)
+        ans *= a, b--;
+    int half = pw(a, b >> 1ll, m);
+    ans = (ans * half) % m * half % m;
+    ans %= m;
+    return ans;
+}
+
+const int N = 1e6 + 10;
+int mem[N];
+int fact(int n, int m)
+{
+    if (n == 0)
+        return 1;
+    if (mem[n] != -1)
+        return mem[n];
+    return mem[n] = (n * fact(n - 1, m)) % m;
+}
