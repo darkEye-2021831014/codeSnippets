@@ -1,0 +1,16 @@
+vi prefix(string &key)
+{
+    vi pi(key.size(), 0);
+    for (int i = 1; i < key.size(); i++)
+    {
+        int j = pi[i - 1];
+        while (j > 0 && key[i] != key[j])
+        {
+            j = pi[j - 1];
+        }
+        if (key[i] == key[j])
+            j++;
+        pi[i] = j;
+    }
+    return pi;
+}
