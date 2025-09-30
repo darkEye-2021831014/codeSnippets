@@ -1,0 +1,94 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// policy based data structure
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+template <typename T>
+using orderset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>; // find_by_order(0 based indexing), order_of_key(strictly less than k)
+// use oset as an ordered set
+#define darkEye                  \
+    ios::sync_with_stdio(false); \
+    cin.tie(NULL);
+#define int long long
+#define double long double
+#define _ << ' ' <<
+#define INF 5ll * 100000ll * 100000ll * 100000ll * 1000ll + 10ll
+#define lcm(a, b) a *(b / __gcd(a, b))
+#define setBits(a) (int)__builtin_popcountll(a)
+#define firstSetBit(a) (int)__builtin_ffs(a)
+#define precision(n) fixed << setprecision(n)
+
+#define vi vector<int>
+#define vc vector<char>
+#define vs vector<string>
+#define vp vector<pair<int, int>>
+#define vvi vector<vector<int>>
+#define vvp vector<vector<pair<int, int>>>
+#define um unordered_map<int, int>
+#define mpp map<int, int>
+#define stt set<int>
+#define ustt unordered_set<int>
+#define mstt multiset<int>
+#define ostt orderset<int>
+#define prr pair<int, int>
+#define pqmn priority_queue<int, vector<int>, greater<int>> // min element on top
+#define pqmx priority_queue<int>                            // max element on top
+
+#define rep(i, initialValue, n) for (int i = initialValue; i < n; i++)
+
+#define line(a) getline(cin >> ws, a)
+#define show(a) cout << a << endl
+
+#define input(a)      \
+    for (auto &x : a) \
+    cin >> x
+#define inpair(a)     \
+    for (auto &x : a) \
+    cin >> x.first >> x.second
+#define output(a)             \
+    {                         \
+        for (auto &x : a)     \
+            cout << x << ' '; \
+        cout << endl;         \
+    }
+#define outpair(a)    \
+    for (auto &x : a) \
+        cout << x.first << ' ' << x.second << endl;
+// shortcut for fast coding
+#define testCase \
+    int t;       \
+    cin >> t;    \
+    while (t--)
+
+#define all(a) a.begin(), a.end()
+#define rall(a) a.rbegin(), a.rend()
+#define yes cout << "Yes\n"
+#define no cout << "No\n"
+#define endl '\n'
+#define whatIs(x) cerr << #x << " is " << x << endl;
+#define pi acos(-1)
+
+// end of shortcuts
+int totalBits(int a)
+{
+    int sz = 0;
+    while (a)
+        sz++, a >>= 1;
+    return sz;
+}
+//
+
+void practice()
+{
+}
+signed main(void)
+{
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
+    darkEye;
+    practice();
+
+    return 0;
+}
